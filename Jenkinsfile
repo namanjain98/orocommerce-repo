@@ -182,29 +182,29 @@ pipeline {
         //             '''
         //     }
         // }
-        stage('Push Cloud release tag') {
-            environment {
-                ORO_CLOUD_DOCKER_PROJECT = 'harborio.oro.cloud'
-                ORO_CLOUD_DOCKER_PROJECT_FOLDER = 'public-dev-ci'
-                ORO_REGISTRY_CREDS = credentials('harborio.oro.cloud')
-            }
-            steps {
-                sh '''
-                    echo $ORO_REGISTRY_CREDS_PSW | docker login -u $ORO_REGISTRY_CREDS_USR --password-stdin $ORO_CLOUD_DOCKER_PROJECT
-                    docker image tag ${ORO_IMAGE,,}:$ORO_IMAGE_TAG $ORO_CLOUD_DOCKER_PROJECT/$ORO_CLOUD_DOCKER_PROJECT_FOLDER/orocommerce-application:${TAG_NAME,,}
-                    docker image tag ${ORO_IMAGE_INIT,,}:$ORO_IMAGE_TAG $ORO_CLOUD_DOCKER_PROJECT/$ORO_CLOUD_DOCKER_PROJECT_FOLDER/orocommerce-application-init:${TAG_NAME,,}
-                    docker image tag ${ORO_IMAGE_INIT,,}:$ORO_IMAGE_TAG $ORO_CLOUD_DOCKER_PROJECT/$ORO_CLOUD_DOCKER_PROJECT_FOLDER/orocommerce-application-init-fr:${TAG_NAME,,}
-                    docker image tag ${ORO_IMAGE_INIT,,}:$ORO_IMAGE_TAG $ORO_CLOUD_DOCKER_PROJECT/$ORO_CLOUD_DOCKER_PROJECT_FOLDER/orocommerce-application-init-de:${TAG_NAME,,}
-                    docker image push $ORO_CLOUD_DOCKER_PROJECT/$ORO_CLOUD_DOCKER_PROJECT_FOLDER/orocommerce-application:${TAG_NAME,,}
-                    docker image push $ORO_CLOUD_DOCKER_PROJECT/$ORO_CLOUD_DOCKER_PROJECT_FOLDER/orocommerce-application-init:${TAG_NAME,,}
-                    docker image push $ORO_CLOUD_DOCKER_PROJECT/$ORO_CLOUD_DOCKER_PROJECT_FOLDER/orocommerce-application-init-fr:${TAG_NAME,,}
-                    docker image push $ORO_CLOUD_DOCKER_PROJECT/$ORO_CLOUD_DOCKER_PROJECT_FOLDER/orocommerce-application-init-de:${TAG_NAME,,}
-                '''
-            }
-            when {
-                buildingTag()
-            }
-        }
+        // stage('Push Cloud release tag') {
+        //     environment {
+        //         ORO_CLOUD_DOCKER_PROJECT = 'harborio.oro.cloud'
+        //         ORO_CLOUD_DOCKER_PROJECT_FOLDER = 'public-dev-ci'
+        //         ORO_REGISTRY_CREDS = credentials('harborio.oro.cloud')
+        //     }
+        //     steps {
+        //         sh '''
+        //             echo $ORO_REGISTRY_CREDS_PSW | docker login -u $ORO_REGISTRY_CREDS_USR --password-stdin $ORO_CLOUD_DOCKER_PROJECT
+        //             docker image tag ${ORO_IMAGE,,}:$ORO_IMAGE_TAG $ORO_CLOUD_DOCKER_PROJECT/$ORO_CLOUD_DOCKER_PROJECT_FOLDER/orocommerce-application:${TAG_NAME,,}
+        //             docker image tag ${ORO_IMAGE_INIT,,}:$ORO_IMAGE_TAG $ORO_CLOUD_DOCKER_PROJECT/$ORO_CLOUD_DOCKER_PROJECT_FOLDER/orocommerce-application-init:${TAG_NAME,,}
+        //             docker image tag ${ORO_IMAGE_INIT,,}:$ORO_IMAGE_TAG $ORO_CLOUD_DOCKER_PROJECT/$ORO_CLOUD_DOCKER_PROJECT_FOLDER/orocommerce-application-init-fr:${TAG_NAME,,}
+        //             docker image tag ${ORO_IMAGE_INIT,,}:$ORO_IMAGE_TAG $ORO_CLOUD_DOCKER_PROJECT/$ORO_CLOUD_DOCKER_PROJECT_FOLDER/orocommerce-application-init-de:${TAG_NAME,,}
+        //             docker image push $ORO_CLOUD_DOCKER_PROJECT/$ORO_CLOUD_DOCKER_PROJECT_FOLDER/orocommerce-application:${TAG_NAME,,}
+        //             docker image push $ORO_CLOUD_DOCKER_PROJECT/$ORO_CLOUD_DOCKER_PROJECT_FOLDER/orocommerce-application-init:${TAG_NAME,,}
+        //             docker image push $ORO_CLOUD_DOCKER_PROJECT/$ORO_CLOUD_DOCKER_PROJECT_FOLDER/orocommerce-application-init-fr:${TAG_NAME,,}
+        //             docker image push $ORO_CLOUD_DOCKER_PROJECT/$ORO_CLOUD_DOCKER_PROJECT_FOLDER/orocommerce-application-init-de:${TAG_NAME,,}
+        //         '''
+        //     }
+        //     when {
+        //         buildingTag()
+        //     }
+        // }
         stage('Push to CI') {
             environment {
                 KEY_FILE = credentials('jenkins_oro-product-development_iam_gserviceaccount_com')
